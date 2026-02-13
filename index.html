@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Heart, As It Is</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Great+Vibes&family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --blush: #fce4ec;
+            --cherry: #d81b60;
+            --deep-rose: #ad1457;
+            --glass: rgba(255, 255, 255, 0.75);
+        }
+        
+        body {
+            /* Romantic Silk Gradient */
+            background: radial-gradient(circle at center, #fff5f7 0%, #fce4ec 50%, #f8bbd0 100%);
+            font-family: 'Lora', serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+            overflow-x: hidden;
+            margin: 0;
+        }
+        /* --- Liquid Memory Orbs --- */
+        
+        .memory-orb-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        @keyframes liquidFlow {
+            0% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                transform: translate(0, 0) rotate(0deg);
+            }
+            50% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+                transform: translate(40px, -60px) rotate(5deg);
+            }
+            100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+        
+        .memory-photo {
+            position: absolute;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 30px rgba(216, 27, 96, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.4);
+            background-size: cover;
+            background-position: center;
+            opacity: 0.85;
+            transition: all 0.8s ease;
+            filter: saturate(1.1);
+        }
+        /* --- Glassmorphism Letter Card --- */
+        
+        .letter-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(216, 27, 96, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+            padding: 60px;
+            max-width: 750px;
+            position: relative;
+            z-index: 10;
+            animation: fadeIn 2s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.98) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        @keyframes retroFlash {
+            0% {
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+                filter: blur(0px);
+            }
+            95% {
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+                filter: blur(0px);
+            }
+            97% {
+                box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+                filter: blur(1px);
+                /* The "tiny flash blur" */
+            }
+            100% {
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+                filter: blur(0px);
+            }
+        }
+        
+        .letter-header {
+            font-family: 'Dancing Script', cursive;
+            color: var(--cherry);
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .letter-body {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #2d2d2d;
+            text-align: justify;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: var(--deep-rose);
+            text-align: right;
+            margin-top: 40px;
+        }
+        /* --- Interactive Elements --- */
+        
+        .interaction-zone {
+            border-top: 1px solid rgba(216, 27, 96, 0.1);
+            margin-top: 50px;
+            padding-top: 50px;
+            position: relative;
+            height: 200px;
+            text-align: center;
+        }
+        
+        .btn-valentine {
+            border-radius: 50px;
+            padding: 15px 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        #yesBtn {
+            background: linear-gradient(45deg, var(--cherry), #ff4081);
+            border: none;
+            color: white;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-120%);
+            bottom: 60px;
+            box-shadow: 0 10px 20px rgba(216, 27, 96, 0.3);
+            z-index: 100;
+        }
+        
+        #yesBtn:hover {
+            transform: translateX(-120%) scale(1.1);
+            box-shadow: 0 15px 30px rgba(216, 27, 96, 0.4);
+        }
+        
+        #noBtn {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            color: #999;
+            position: absolute;
+            left: 50%;
+            transform: translateX(20%);
+            bottom: 60px;
+            z-index: 101;
+        }
+        /* Success State */
+        
+        .success-content {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+        }
+        /* Romantic Heart Particles */
+        
+        .heart {
+            position: fixed;
+            color: var(--cherry);
+            opacity: 0;
+            /* Starts invisible */
+            pointer-events: none;
+            z-index: 1;
+            animation: floatHeart 12s linear infinite;
+            text-shadow: 0 0 5px rgba(216, 27, 96, 0.3);
+        }
+        
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(110vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            50% {
+                /* This adds the "wobble" effect */
+                transform: translateY(50vh) translateX(30px) scale(1.2) rotate(15deg);
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-20vh) translateX(-30px) scale(1.8) rotate(-15deg);
+                opacity: 0;
+            }
+        }
+        /* --- Mobile Responsiveness --- */
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+                /* Less padding around the card */
+            }
+            .letter-card {
+                padding: 30px 20px;
+                /* Shrink internal padding */
+                border-radius: 20px;
+            }
+            .letter-header {
+                font-size: 2.5rem;
+                /* Smaller title */
+            }
+            .letter-body {
+                font-size: 1.05rem;
+                /* Easier to read on small screens */
+                line-height: 1.7;
+            }
+            /* Video width should be larger on mobile so it's visible */
+            .video-frame {
+                width: 90% !important;
+            }
+            #successSection .letter-header {
+                font-size: 3rem !important;
+            }
+            #successSection p {
+                font-size: 1rem !important;
+            }
+            #successSection p[style*="Great Vibes"] {
+                font-size: 2.2rem !important;
+                /* The punchline font */
+            }
+            /* Adjust Buttons for thumbs */
+            .btn-valentine {
+                padding: 12px 30px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="memory-orb-container" id="orbContainer"></div>
+
+    <div class="container d-flex justify-content-center">
+        <div class="letter-card" id="mainContainer">
+            <div id="askSection">
+                <h1 class="letter-header">My Heart, As It Is</h1>
+
+                <div class="letter-body">
+                    <p>My bby,</p>
+                    <p>You always tell me to live in this moment. To be present. To be with you now. I know you are right. But my mind is stuck in the future, trying desperately to protect you from pain, trying to build something I am not sure I can carry
+                        yet. Everything I worry about is because I see you as my future wife. Because I want to take care of you. Because I want to be the man you can lean on.</p>
+
+                    <p>I know I am not talkative like you. When things turn into arguments, I go quiet. Not because I do not care. Not because I am ignoring you. But because that is how I survive. Your words still reach me. They stay inside me. Sometimes
+                        they hurt so deeply that I do not know how to respond without breaking down. Please do not think my silence means I do not feel anything. It means I feel too much.</p>
+
+                    <p>Those silent days were not because I was angry. They were because I felt like you had had enough of me. Like you were tired of me. That feeling made me step back even though all I wanted was to stay close. I have always believed that
+                        if me walking away ever meant your happiness, I would do it without hesitation. That is how much I love you.</p>
+
+                    <p>Please do not only hold onto the bad things that happened because of me. Every small thing I did was driven by love. Every effort, every choice, every compromise was to make you feel valued, wanted, and loved. You know I hate arguing.
+                        You know I do not fight back. That is who I am. Just like you struggle with anger, I struggle with shutting down. Neither of us is perfect. No one ever meets someone’s expectations completely.</p>
+
+                    <p>I do not want to give up because of problems. I want to face them with you. I want to find solutions together. Everything you and I do is for our success, whether it turns out right or wrong. I believe in that. I believe in us. Because
+                        to me, we are one.</p>
+
+                    <p>So I am asking you, not confidently, not perfectly, but honestly and with everything I have left.</p>
+
+                    <p>Please try again with me.<br>Please start over with me.</p>
+
+                    <p>And if your heart still feels a place for me, if love still whispers my name when you close your eyes, if you can see even a small spark of what we once were…</p>
+
+                    <p>Will you be my Valentine, and let me love you quietly, deeply, and forever in the way I know how?</p>
+
+                    <div class="signature">Always yours,<br>Anushka.</div>
+                </div>
+
+                <div class="interaction-zone" id="btnArea">
+                    <button id="yesBtn" class="btn btn-valentine" onclick="celebrate()">Yes</button>
+                    <button id="noBtn" class="btn btn-valentine">No</button>
+                </div>
+            </div>
+
+            <div id="successSection" class="success-content">
+                <h2 class="letter-header" style="font-family: 'Great Vibes', cursive; font-size: 4.5rem; margin-bottom: 20px;">Thank You ❤️</h2>
+
+                <div style="max-width: 90%; margin: 0 auto 35px auto; padding: 0 10px;">
+                    <p style="font-family: 'Lora', serif; font-size: 1.3rem; line-height: 1.6; color: #444; font-style: italic; margin-bottom: 12px;">
+                        "I spent so long lost in the noise of my own head,<br> but you were always the melody I was trying to find."
+                    </p>
+
+                    <p style="font-family: 'Lora', serif; font-size: 1.1rem; line-height: 1.6; color: #666; margin-bottom: 15px; letter-spacing: 1px;">
+                        Even when I couldn't find the words,<br> my heart never stopped reaching for you.
+                    </p>
+
+                    <p style="font-family: 'Great Vibes', cursive; font-size: 3.2rem; color: var(--cherry); margin-top: 15px; text-shadow: 0 0 15px rgba(216, 27, 96, 0.2); animation: textShimmer 3s infinite alternate;">
+                        You are the only future I ever want to see.
+                    </p>
+                </div>
+
+                <div class="video-frame" style="
+        width: 55%; 
+        margin: 0 auto; 
+        position: relative; 
+        padding: 12px; 
+        background: rgba(255, 255, 255, 0.4); 
+        border-radius: 15px; 
+        box-shadow: 0 0 20px rgba(255,255,255,0.7);
+        animation: retroFlash 5s infinite alternate ease-in-out;">
+
+                    <video id="celebrationVideo" width="100%" style="border-radius: 8px; filter: grayscale(1) contrast(1.1) brightness(0.9); display: block;" loop muted playsinline>
+            <source src="video.MOV" type="video/quicktime">
+            <source src="video.MOV" type="video/mp4">
+        </video>
+
+                    <div style="position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px; pointer-events: none; border-radius: 8px; box-shadow: inset 0 0 30px rgba(0,0,0,0.5); z-index: 2;"></div>
+                </div>
+
+                <div class="display-1 mt-5" style="filter: drop-shadow(0 0 10px rgba(216,27,96,0.2)); opacity: 0.6;">🌹💍🥂</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Use the SAME URL for both images and tracking
+        const proxyUrl = "https://script.google.com/macros/s/AKfycbwdbiSpRBH2XbUgdyDS_cvcLc2Iqqx4yoJXrDWBfA12hhO-NT-MWXoKiGO0n0xSRG7_YA/exec";
+        const statsUrl = proxyUrl;
+
+        // 1. Track the Visit and Load Assets
+        window.onload = () => {
+            fetch(`${statsUrl}?action=Visit`).catch(e => console.log("Tracking blocked or failed"));
+            loadMemories();
+            createHearts();
+        };
+
+        // 2. Combined Celebration & Tracking Function
+        function celebrate() {
+            // Log the 'Yes' click
+            fetch(`${statsUrl}?action=Clicked_Yes`).catch(e => console.log("Tracking failed"));
+
+            // UI Changes
+            document.getElementById('askSection').style.display = 'none';
+            document.getElementById('successSection').style.display = 'block';
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            // Handle Video
+            const video = document.getElementById('celebrationVideo');
+            if (video) {
+                video.muted = false; // Try playing with sound
+                video.play().catch(error => {
+                    video.muted = true; // Fallback to muted if browser blocks
+                    video.play();
+                });
+            }
+
+            // Success Confetti Effect
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = ['#d81b60', '#fce4ec', '#f06292', '#ad1457'][Math.floor(Math.random() * 4)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-20px';
+                confetti.style.borderRadius = '50%';
+                confetti.style.zIndex = '999';
+                confetti.style.animation = `floatHeart ${Math.random() * 3 + 2}s linear forwards`; // Reusing heart animation for simplicity
+                document.body.appendChild(confetti);
+            }
+        }
+
+        // 3. Load Memories from Google Drive
+        async function loadMemories() {
+            try {
+                const response = await fetch(proxyUrl);
+                const images = await response.json();
+                const container = document.getElementById('orbContainer');
+
+                images.forEach((url, index) => {
+                    const ball = document.createElement('div');
+                    ball.className = 'memory-photo';
+                    // The Google Script now provides secure URLs directly
+                    ball.style.backgroundImage = `url('${url}')`;
+
+                    const size = Math.random() * 80 + 160;
+                    let leftPos = Math.random() * 95;
+                    let topPos = Math.random() * 95;
+
+                    const duration = Math.random() * 15 + 15;
+                    const delay = Math.random() * -20;
+
+                    Object.assign(ball.style, {
+                        width: `${size}px`,
+                        height: `${size}px`,
+                        top: `${topPos}%`,
+                        left: `${leftPos}%`,
+                        animation: `liquidFlow ${duration}s infinite ease-in-out`,
+                        animationDelay: `${delay}s`,
+                        animationDirection: index % 2 === 0 ? 'normal' : 'reverse',
+                        zIndex: "1"
+                    });
+                    container.appendChild(ball);
+                });
+            } catch (e) {
+                console.error("Photos couldn't load:", e);
+            }
+        }
+
+        // --- Helper Functions ---
+        function createHearts() {
+            const container = document.body;
+            const count = 40; // Increased from 15 for a much fuller effect
+
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+
+                // Randomize the look of each heart
+                const size = Math.random() * 20 + 12; // Mix of small and large hearts
+                const left = Math.random() * 100; // Spread across full width
+                const delay = Math.random() * 15; // Staggered start times
+                const duration = Math.random() * 5 + 10; // Some hearts float faster than others
+
+                heart.innerHTML = '❤';
+                Object.assign(heart.style, {
+                    left: `${left}vw`,
+                    fontSize: `${size}px`,
+                    animationDuration: `${duration}s`,
+                    animationDelay: `${delay}s`,
+                    // Slight color variation for depth
+                    color: i % 3 === 0 ? '#ff4081' : '#d81b60'
+                });
+
+                container.appendChild(heart);
+            }
+        }
+
+        // Button Escape Logic
+        const noBtn = document.getElementById('noBtn');
+        const btnArea = document.getElementById('btnArea');
+        const radius = 110;
+
+        document.addEventListener('mousemove', (e) => {
+            const rect = noBtn.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const distance = Math.sqrt(Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2));
+            if (distance < radius) moveButton();
+        });
+
+        function moveButton() {
+            const areaRect = btnArea.getBoundingClientRect();
+            const maxX = areaRect.width - noBtn.offsetWidth - 20;
+            const maxY = areaRect.height - noBtn.offsetHeight - 20;
+            noBtn.style.left = `${Math.random() * maxX}px`;
+            noBtn.style.top = `${Math.random() * maxY}px`;
+            noBtn.style.position = 'absolute';
+        }
+        // Add 'touchstart' for mobile support
+        document.addEventListener('touchstart', (e) => {
+            const rect = noBtn.getBoundingClientRect();
+            const touch = e.touches[0];
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const distance = Math.sqrt(Math.pow(touch.clientX - centerX, 2) + Math.pow(touch.clientY - centerY, 2));
+
+            if (distance < radius) {
+                moveButton();
+            }
+        });
+    </script>
+</body>
+
+</html>
